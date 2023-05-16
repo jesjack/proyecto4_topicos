@@ -1,0 +1,46 @@
+package com.example.models.%database%;
+
+import com.example.models.Model;
+
+import java.util.List;
+import java.util.Date;
+
+public class %ClassName% extends Model {
+
+    public %ClassName%() {
+        super("%database%.%TableName%");
+    }
+
+    public static %ClassName% fromModel(Model model) {
+        if (model == null) return null;
+        %ClassName% m = new %ClassName%();
+        %fromModel%
+        return m;
+    }
+
+    public static %ClassName% find(%PrimaryKeyType% %PrimaryKey%) {
+        return fromModel(Model.findFirst("%database%.%TableName%", "%PrimaryKey%", %PrimaryKey%));
+    }
+
+    public static List<%ClassName%> find(%ClassName% m) {
+        return Model
+                .find("%database%.%TableName%", m.getData())
+                .stream()
+                .map(%ClassName%::fromModel)
+                .toList();
+    }
+
+    public static List<%ClassName%> all() {
+        return Model
+                .all("%database%.%TableName%")
+                .stream()
+                .map(%ClassName%::fromModel)
+                .toList();
+    }
+
+    public static List<String> getColumnNames() {
+        return List.of(%ColumnNames%);
+    }
+
+    %GettersSetters%
+}
